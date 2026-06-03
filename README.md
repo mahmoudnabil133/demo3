@@ -1,36 +1,333 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Products App
 
-## Getting Started
+A modern Products Application built with **Next.js 16 App Router**, **TypeScript**, **Tailwind CSS v4**, **MongoDB Atlas**, **Mongoose**, and **NextAuth**.
 
-First, run the development server:
+The application allows users to browse products, view product details, and authenticate using GitHub or Google.
+
+---
+
+## Features
+
+- Next.js 16 App Router
+- TypeScript
+- Tailwind CSS v4
+- MongoDB Atlas
+- Mongoose ODM
+- NextAuth Authentication
+- GitHub Login
+- Google Login
+- Product Listing Page
+- Product Details Page
+- Responsive Navbar
+- About Page
+- Contact Page
+- REST API Routes
+- Server Components
+
+---
+
+## Screenshots
+
+### Products Page
+
+![Products Page](./src/docs/all.png)
+
+---
+
+### Product Details Page
+
+![Product Details](./src/docs/details.png)
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|------------|----------|
+| Next.js 16 | React Framework |
+| React 19 | UI Library |
+| TypeScript | Type Safety |
+| Tailwind CSS v4 | Styling |
+| MongoDB Atlas | Database |
+| Mongoose | ODM |
+| NextAuth | Authentication |
+
+---
+
+## Project Structure
+
+```text
+src
+├── app
+│   ├── page.tsx
+│   ├── layout.tsx
+│   │
+│   ├── products
+│   │   ├── page.tsx
+│   │   └── [id]
+│   │       └── page.tsx
+│   │
+│   ├── about
+│   │   └── page.tsx
+│   │
+│   ├── contact
+│   │   └── page.tsx
+│   │
+│   └── api
+│       ├── products
+│       │   ├── route.ts
+│       │   └── [id]
+│       │       └── route.ts
+│       │
+│       └── auth
+│           └── [...nextauth]
+│               └── route.ts
+│
+├── components
+│   ├── Navbar.tsx
+│   ├── ProductCard.tsx
+│   ├── ProductDetails.tsx
+│   └── Providers.tsx
+│
+├── lib
+│   ├── db.ts
+│   └── auth.ts
+│
+├── models
+│   └── Product.ts
+│
+├── types
+│   └── Product.ts
+│
+└── docs
+    ├── all.png
+    └── details.png
+```
+
+---
+
+## Routes
+
+### Pages
+
+| Route | Description |
+|---------|------------|
+| `/` | Home Page |
+| `/products` | Products Listing |
+| `/products/[id]` | Product Details |
+| `/about` | About Page |
+| `/contact` | Contact Page |
+
+### API Routes
+
+#### Get All Products
+
+```http
+GET /api/products
+```
+
+Example Response:
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Product Name"
+  }
+]
+```
+
+#### Get Product By ID
+
+```http
+GET /api/products/1
+```
+
+Example Response:
+
+```json
+{
+  "id": 1,
+  "title": "Product Name"
+}
+```
+
+---
+
+## Product Schema
+
+```ts
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+
+  tags: string[];
+
+  brand: string;
+  sku: string;
+  weight: number;
+
+  dimensions: {
+    width: number;
+    height: number;
+    depth: number;
+  };
+
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
+
+  reviews: {
+    rating: number;
+    comment: string;
+    date: string;
+    reviewerName: string;
+    reviewerEmail: string;
+  }[];
+
+  returnPolicy: string;
+
+  minimumOrderQuantity: number;
+
+  meta: {
+    createdAt: string;
+    updatedAt: string;
+    barcode: string;
+    qrCode: string;
+  };
+
+  images: string[];
+
+  thumbnail: string;
+}
+```
+
+---
+
+## Environment Variables
+
+Create a `.env.local` file:
+
+```env
+MONGODB_URI=your_mongodb_connection
+
+NEXTAUTH_SECRET=your_secret
+NEXTAUTH_URL=http://localhost:3000
+
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+```
+
+Move into the project:
+
+```bash
+cd demo
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+---
+
+## Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open your browser and visit:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Build for Production
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Start the production server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run start
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Authentication
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application uses **NextAuth** with:
+
+- GitHub Provider
+- Google Provider
+
+Features:
+
+- Secure Login
+- Logout
+- Session Management
+- User Authentication
+
+---
+
+## Database
+
+MongoDB Atlas is used as the primary database.
+
+Responsibilities:
+
+- Store Products
+- Retrieve Products
+- Retrieve Product Details
+
+---
+
+## Future Improvements
+
+- Product Search
+- Product Filtering
+- Pagination
+- Categories
+- Wishlist
+- User Profiles
+- Admin Dashboard
+
+---
+
+## Author
+
+**Mahmoud Nabil**
+
+- GitHub: https://github.com/mahmoudnabil133
+- LinkedIn: https://www.linkedin.com/in/mahmoud-nabil-97278b24b/
+
+---
+
+## License
+
+MIT License
