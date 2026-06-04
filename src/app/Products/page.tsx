@@ -1,12 +1,13 @@
 import dbConnect from '@/lib/db';
 import ProductModel from '@/models/Product';
-import ProductCard from '@/components/ProductCard';
+import ProductListClient from '@/components/ProductListClient';
 import { Product } from '@/types/Product';
 
 async function getAllProducts(): Promise<Product[]> {
     try {
         await dbConnect();
-        const rawProducts = await ProductModel.find({}).lean();
+        // Sort by id descending so newly added products show up at the top
+        const rawProducts = await ProductModel.find({}).sort({ id: -1 }).lean();
         return JSON.parse(JSON.stringify(rawProducts));
     } catch (error) {
         console.error(error);
@@ -24,17 +25,7 @@ export default async function ProductsPage() {
                 <p className="text-slate-500 mt-1">Browse our full range of live database entries synced instantly.</p>
             </div>
 
-            {products.length === 0 ? (
-                <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl text-center">
-                    Failed to fetch stock updates or the database is currently empty.
-                </div>
-            ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {products.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
-            )}
+            <ProductListClient initialProducts={products} />
         </div>
     );
 }
